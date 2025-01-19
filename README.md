@@ -1,4 +1,4 @@
-Thyroid Disease Check
+*Thyroid Disease Check*
 A machine learning-based system to predict the likelihood of thyroid diseases based on various input features. This project provides a web application for users to input their health data and receive predictions about thyroid disease risk.
 
 Table of Contents
