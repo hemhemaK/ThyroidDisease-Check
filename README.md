@@ -7,8 +7,7 @@ A machine learning-based system to predict the likelihood of thyroid diseases ba
 - [Technologies](#technologies)
 - [Setup](#setup)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+
 
 ## **Introduction**
 This project aims to predict the presence of thyroid diseases using various health-related features such as age, gender, TSH levels, and other thyroid-related data. It leverages machine learning models and offers a user-friendly interface for inputting data and receiving predictions.
