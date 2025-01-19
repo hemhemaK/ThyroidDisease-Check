@@ -1,0 +1,287 @@
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Appointment</title>
+    <style>
+    ::selection {
+    background-color: rgba(0,0,0,0.99);
+    color: #FFFFFF;
+    text-shadow: none;
+  }
+  .content {
+       margin-top: 260px;
+       margin-left:20px;
+       color:white;
+       text-align:left;
+  }
+  .content h2{
+       text-align:left;
+  }
+
+.navigation{
+  padding-top:30px;
+  padding-bottom:30px;
+  position:absolute;
+  top:0;
+  width:100%;
+  z-index:1;
+}
+
+.navbar-left{
+  float:left;
+  padding-right:10px;
+}
+
+.navbar-left a{
+  text-decoration:none;
+  padding:10px;
+  color: #fff;
+  font-family:Arial;
+  font-weight:900;
+}
+
+.navbar-left a:hover{
+  text-decoration:underline;
+}
+.navbar-right{
+  float:right;
+  margin-right:40px;
+}
+
+.navbar-right a{
+  text-decoration:none;
+  padding:10px;
+  color: #fff;
+  font-family:Arial;
+  font-weight:900;
+}
+
+.navbar-right a:hover{
+  text-decoration:underline;
+}
+
+.video-container {
+z-index: -100;
+width:100%;
+height:100%;
+overflow:hidden;
+position:absolute;
+top:0;
+left:0;
+}
+
+#video-bg{
+  width:100%;
+
+}
+
+.enquiry{
+    background-color: rgba(153, 153, 255, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    width:50%;
+    margin: 10px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+    margin-top:100px;
+    height:70%;
+}
+.enquiry h1 {
+    text-align: center;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-top:20px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+form input[type="datetime-local"] {
+    width: 50%;
+    padding: 10px; /* Increased padding for larger height */
+    margin: 5px 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+form button[type="submit"] {
+    background-color: #000033;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+    </style>
+</head>
+<body>
+<header>
+  <div class="header">
+    <nav class="navigation">
+      <div class="navbar-left">
+        <a href="/home1">Home</a>
+        <a href="/predict">Predict</a>
+        <a href="/user_prediction_list">History</a>
+        <a href="/user_enquiry_list">Status</a>
+        <a href="/enquiry">Enquiry</a>
+      </div>
+        <div class="navbar-right">
+             {% if user.is_authenticated %}
+              <a href="#" >{{ request.user.username }}</a>
+              <a href="/login" >Logout</a>
+            {% endif %}
+        </div>
+    </nav>
+
+<div class="enquiry">
+    <h1>Book Appointment</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="title">Event Title:</label>
+        <input type="text" name="title" id="title" required>
+
+        <label for="start">Start Time:</label>
+        <input type="datetime-local" name="start" id="start" required>
+
+        <label for="end">End Time:</label>
+        <input type="datetime-local" name="end" id="end" required>
+
+        <button type="submit">Book Appointment</button>
+    </form>
+</div>
+<div class="video-container">
+      <video autoplay loop muted id="video-bg">
+          <source src="{% static 'images/video12.mp4' %}" type="video/mp4">
+      </video>
+      </div>
+  </div>
+</header>
+
+<head>
+    <style>
+        @import url("https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css");
+        @import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&display=swap");
+
+body {
+  --bgColor: rgba(245, 245, 245);
+  background-color:#00001a;
+
+}
+
+h2 {
+ text-align: center;
+ margin:10px;
+ margin-top:150px;
+ color:white;
+ }
+
+ol {
+  width: min(100rem, 95%);
+  margin-top:80px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  list-style: none;
+  counter-reset: stepnr;
+  margin-bottom:50px;
+}
+
+li:nth-child(6n + 1) { --accent-color: #b8df4e }
+li:nth-child(6n + 2) { --accent-color: #4cbccb }
+li:nth-child(6n + 3) { --accent-color: #7197d3 }
+li:nth-child(6n + 4) { --accent-color: #ae78cb }
+li:nth-child(6n + 5) { --accent-color: #7dc7a4 }
+li:nth-child(6n + 6) { --accent-color: #f078c2 }
+
+ol li {
+  counter-increment: stepnr;
+  width: 16rem;
+  --borderS: 2rem;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: calc(var(--borderS) + 2rem);
+  position: relative;
+  color:white;
+}
+ol li::before,
+ol li::after {
+  inset: 0;
+  position: absolute;
+  border-radius: 50%;
+  border: var(--borderS) solid var(--bgColor);
+  line-height: 1.0;
+}
+ol li::before {
+  content: counter(stepnr);
+  color: var(--accent-color);
+  padding-left: 10rem;
+  font-size: 5rem;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+ol li::after {
+  content: "";
+  filter: drop-shadow(-0.25rem 0.25rem 0.0675rem rgba(0, 0, 0, 0.75)) blur(5px);
+}
+
+ol li > * { width: 9.8rem }
+
+    </style>
+</head>
+      <h2><b>Works</b></h2>
+<ol>
+    <li >
+        <p>This could involve signing up, creating an account, or simply accessing the service where predictions are made.
+</p>
+    </li>
+    <li >
+        <p>gather all necessary personal and medical information that the prediction model requires related to thyroid issues.</p>
+    </li>
+    <li >
+        <p>Enter the collected data into the system. This could a series of questions that helps model understand your health.</p>
+    </li>
+    <li >
+        <p>The model processes the input data, analyzing it using algorithms designed to predict thyroid disease.</p>
+    </li>
+    <li >
+        <p>This prediction could indicate whether you are at risk for thyroid disease or provide insights into your thyroid health. </p>
+    </li>
+    <li >
+        <p>Depending on the prediction, the final step involves deciding what to do next. This could involve consulting a doctor.</p>
+    </li>
+</ol>
+
+</body>
+</html>
+
+{% endblock %}

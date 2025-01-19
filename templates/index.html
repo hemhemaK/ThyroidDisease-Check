@@ -1,0 +1,564 @@
+{% load static %}
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Thyroid Prediction</title>
+<style>
+    ::selection {
+    background-color: rgba(0,0,0,0.99);
+    color: #FFFFFF;
+    text-shadow: none;
+    }
+.content {
+       margin-top: 200px;
+       margin-left:20px;
+       color:white;
+       text-align:left;
+       background-color: rgba(0,0,0,0.9);
+       padding:10px;
+       width:30%;
+       border-radius:10px;
+}
+.content h2{
+       text-align:left;
+}
+
+/* Nav bar */
+.navigation{
+  padding-top:30px;
+  padding-bottom:30px;
+  position:absolute;
+  top:0;
+  width:100%;
+  z-index:1;
+}
+
+.navbar-left{
+  float:left;
+  padding-right:10px;
+}
+
+.navbar-left a{
+  text-decoration:none;
+  padding:10px;
+  color: #fff;
+  font-family:Arial;
+  font-weight:900;
+}
+
+.navbar-left a:hover{
+  text-decoration:underline;
+}
+.navbar-right{
+  float:right;
+  margin-right:40px;
+}
+
+.navbar-right a{
+  text-decoration:none;
+  padding:10px;
+  color: #fff;
+  font-family:Arial;
+  font-weight:900;
+}
+
+.navbar-right a:hover{
+  text-decoration:underline;
+}
+
+.video-container {
+z-index: -100;
+width:100%;
+height:100%;
+overflow:hidden;
+position:absolute;
+top:0;
+left:0;
+}
+
+#video-bg{
+  width:100%;
+
+}
+
+.portfolio-section{
+  margin-top:150px;
+}
+.tagline-left{
+  float:left;
+  width:48%;
+  text-align:center;
+  border: 2px solid white;
+  margin-bottom:10px;
+}
+
+.tagline-right{
+  float:right;
+  width:48%;
+  text-align:center;
+  border: 2px solid white;
+}
+
+.tagline-video{
+  width:75%;
+}
+
+/* button */
+.button-86 {
+  all: unset;
+  width: 100px;
+  height: 30px;
+  font-size: 16px;
+  background: transparent;
+  border: none;
+  position: relative;
+  color: #f0f0f0;
+  cursor: pointer;
+  z-index: 1;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-86::after,
+.button-86::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -99999;
+  transition: all .4s;
+}
+
+.button-86::before {
+  transform: translate(0%, 0%);
+  width: 100%;
+  height: 100%;
+  background: #28282d;
+  border-radius: 10px;
+}
+
+.button-86::after {
+  transform: translate(10px, 10px);
+  width: 35px;
+  height: 35px;
+  background: #ffffff15;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 50px;
+}
+
+.button-86:hover::before {
+  transform: translate(5%, 20%);
+  width: 110%;
+  height: 110%;
+}
+
+.button-86:hover::after {
+  border-radius: 10px;
+  transform: translate(0, 0);
+  width: 100%;
+  height: 100%;
+}
+
+.button-86:active::after {
+  transition: 0s;
+  transform: translate(0, 5%);
+}
+
+/* About styles */
+.contain {
+  background: #f4f4f4;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0px;
+  width:98%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+.contain h3 {
+  font-size: 24px;
+  color: #000033;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.contain h4 {
+  font-size: 16px;
+  color: #000033;
+  line-height: 1.6;
+}
+
+/* Animation effects */
+.contain::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 0;
+  transition: transform 0.8s ease-in-out;
+}
+
+.contain:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.contain:hover {
+  background: #e0f7fa;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .contain {
+    padding: 15px;
+  }
+
+  .contain h3 {
+    font-size: 20px;
+  }
+
+  .contain h4 {
+    font-size: 14px;
+  }
+}
+ @media (max-width: 768px) {
+      .navbar-right a {
+        display: block;
+        padding: 10px;
+        font-weight:900;
+        margin-top:-10px;
+      }
+      }
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,900&display=swap');
+
+.container{
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+  flex-wrap:wrap;
+  padding:20px 10px;
+}
+.card{
+  display:flex;
+  flex-direction:column;
+  width:350px;
+  margin-bottom:60px;
+}
+.card>div{
+  box-shadow:0 15px 20px 0 rgba(0,0,0,0.5);
+}
+.card-image{
+  width:300px;
+  height:200px;
+}
+.card-image>img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:bottom;
+}
+.card-text{
+  margin:-40px auto;
+  margin-bottom:-50px;
+  height:150px;
+  width:200px;
+  background-color:#1D1C20;
+  color:#fff;
+  padding:20px;
+}
+.card-meal-type{
+  font-style:italic;
+}
+.card-title{
+  font-size:2.2rem;
+  margin-bottom:20px;
+  margin-top:5px;
+}
+.card-body{
+  font-size:1.25rem;
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="header">
+    <nav class="navigation">
+        <div class="navbar-left">
+            <a href="#">Home</a>
+            <a href="#about">AboutUs</a>
+            <a href="#works">Works</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="navbar-right">
+            <a href="/signup" >Signup</a>
+            <a href="/login" >Login</a>
+            <a href="/admin_login" >Admin</a>
+        </div>
+    </nav>
+      <div class="content">
+          <h1> WELCOME </h1>
+          <h2>To Thyroid Prediction System</h2>
+          <p>The industry through interactive Applications</p>
+            <a style="width:0px" target="_blank">
+            <form action="login">
+            <button class="button-86" role="button"><b>Let's Get Started</b></button>
+        </form>
+        </a>
+      </div>
+
+      <div class="video-container">
+      <video autoplay loop muted id="video-bg">
+          <source src="{% static 'images/video16.mp4' %}" type="video/mp4">
+      </video>
+      </div>
+  </div>
+</header>
+
+<div class="portfolio-section">
+  <div class="tagline-left">
+    <video autoplay muted loop class="tagline-video">
+      <source src="{% static 'images/video7.mp4' %}" type="video/mp4">
+    </video>
+  </div>
+  <div class="tagline-right">
+    <video autoplay muted loop class="tagline-video">
+      <source src="{% static 'images/video18.mp4' %}" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<div class="contain" id="about">
+        <h3>About Us</h3>
+       <h4>Welcome to our thyroid disease check-up service. We specialize in providing
+         comprehensive assessments to diagnose and monitor thyroid health. Regular
+         check-ups can help detect conditions like hypothyroidism, hyperthyroidism,
+         and thyroid cancer early on, ensuring timely treatment and management.</h4>
+<div class="container">
+<div class="card">
+  <div class="card-image">
+    <img src="{% static 'images/wall2.jpg' %}">
+  </div>
+  <div class="card-text">
+    <h2 class="card-title">Our Teams</h2>
+    <p class="card-body">Names</p>
+  </div>
+</div>
+  <div class="card">
+  <div class="card-image">
+    <img src="{% static 'images/platform.jpg' %}">
+  </div>
+  <div class="card-text">
+    <h2 class="card-title">Platforms</h2>
+    <p class="card-body">Available</p>
+  </div>
+</div>
+  <div class="card">
+  <div class="card-image">
+    <img src="{% static 'images/result.jpg' %}">
+  </div>
+  <div class="card-text">
+    <h2 class="card-title">Results</h2>
+    <p class="card-body">Accuracy</p>
+  </div>
+</div>
+</div>
+</div>
+<head>
+    <style>
+        @import url("https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css");
+        @import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&display=swap");
+
+body {
+  --bgColor: rgba(245, 245, 245);
+  background-color:#00001a;
+  min-height: 100vh;
+  align-content: center;
+  gap: 2rem;
+
+}
+
+h2 { text-align: center;
+ margin:10px;
+ color:white;
+ }
+
+ol {
+  width: min(100rem, 100%);
+  margin-inline: auto;
+  margin-top:40px;
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  gap: 4rem;
+  list-style: none;
+  counter-reset: stepnr;
+  margin-bottom:50px;
+}
+
+li:nth-child(6n + 1) { --accent-color: #b8df4e }
+li:nth-child(6n + 2) { --accent-color: #4cbccb }
+li:nth-child(6n + 3) { --accent-color: #7197d3 }
+li:nth-child(6n + 4) { --accent-color: #ae78cb }
+li:nth-child(6n + 5) { --accent-color: #7dc7a4 }
+li:nth-child(6n + 6) { --accent-color: #f078c2 }
+
+ol li {
+  counter-increment: stepnr;
+  width: 16rem;
+  --borderS: 2rem;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: calc(var(--borderS) + 1rem);
+  color:white;
+  position: relative;
+
+}
+ol li::before,
+ol li::after {
+  inset: 0;
+  position: absolute;
+  border-radius: 50%;
+  border: var(--borderS) solid var(--bgColor);
+  line-height: 1.0;
+}
+ol li::before {
+  content: counter(stepnr);
+  color: var(--accent-color);
+  padding-left: 8rem;
+  font-size: 4rem;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+ol li::after {
+  content: "";
+  filter: drop-shadow(-0.25rem 0.25rem 0.0675rem rgba(0, 0, 0, 0.75)) blur(5px);
+}
+
+ol li > * { width: 12rem }
+
+    </style>
+</head>
+      <div id="works"></div>
+      <h2><b>Works</b></h2>
+<ol>
+    <li >
+        <p>This could involve signing up, creating an account, or simply accessing the service where predictions are made.
+</p>
+    </li>
+    <li >
+        <p>gather all necessary personal and medical information that the prediction model requires related to thyroid issues.</p>
+    </li>
+    <li >
+        <p>Enter the collected data into the system. This could a series of questions that helps model understand your health.</p>
+    </li>
+    <li >
+        <p>The model processes the input data, analyzing it using algorithms designed to predict thyroid disease.</p>
+    </li>
+    <li >
+        <p>This prediction could indicate whether you are at risk for thyroid disease or provide insights into your thyroid health. </p>
+    </li>
+    <li >
+        <p>Depending on the prediction, the final step involves deciding what to do next. This could involve consulting a doctor.</p>
+    </li>
+</ol>
+<style>
+.contact-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
+}
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"], input[type="email"], textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+textarea {
+    resize: none;
+}
+
+button.submit-button {
+    background-color: #000033;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button.submit-button:hover {
+    background-color: #4cae4c;
+}
+
+.success-message {
+    color: #28a745;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+</style>
+
+
+<div class="contact-container">
+        <h1>Contact Us</h1>
+
+        <!-- Success Message -->
+        {% if messages %}
+            <div class="message-container">
+                {% for message in messages %}
+                    <p class="success-message">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form action="{% url 'contact' %}" method="post">
+            {% csrf_token %}
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name.." required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Your email.." required>
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Write your message here.." rows="5" required></textarea>
+
+            <button type="submit" class="submit-button">Send Message</button>
+        </form>
+    </div>
+</body>
+</html>

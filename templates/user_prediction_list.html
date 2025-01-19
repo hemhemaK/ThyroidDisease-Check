@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Prediction</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        th, td {
+            padding: 6px 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            white-space: nowrap;
+        }
+        th {
+            background-color: #000033;
+            color: white;
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        tr:nth-child(even) td {
+            background-color: #f1f1f1;
+        }
+        tr:hover td {
+            background-color: #d1ecf1;
+            color: #333;
+        }
+        .empty-row {
+            text-align: center;
+            color: #888;
+            font-size: 1em;
+            font-style: italic;
+        }
+        .table-wrapper {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        @media (max-width: 768px) {
+            th, td {
+                font-size: 0.75em;
+            }
+        }
+        .delete-button {
+            padding: 5px 10px;
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .delete-button:hover {
+            background-color: #c9302c;
+        }
+
+        .button-container {
+    text-align: left;
+    margin-top: 0px;
+    margin-bottom:20px;
+}
+
+.btn-home {
+    display: inline-block;
+    background-color: #000033;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+    margin-right: 10px;
+}
+
+.btn-home:hover,
+.btn-predict:hover {
+    background-color: #FF8C00;
+    transform: scale(1.05);
+}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="button-container">
+        <h1>Thyroid Prediction Results</h1>
+        <a href="{% url 'home1' %}" class="btn-home">Home</a>
+    </div>
+    {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Age</th>
+                    <th>Sex</th>
+                    <th>On Thyroxine</th>
+                    <th>On Antithyroid Meds</th>
+                    <th>Sick</th>
+                    <th>Pregnant</th>
+                    <th>Thyroid Surgery</th>
+                    <th>I131 Treatment</th>
+                    <th>Query Hypothyroid</th>
+                    <th>Query Hyperthyroid</th>
+                    <th>Lithium</th>
+                    <th>Goitre</th>
+                    <th>Tumor</th>
+                    <th>Hypopituitary</th>
+                    <th>Psych</th>
+                    <th>FTI Measured</th>
+                    <th>TSH Measured</th>
+                    <th>T3 Measured</th>
+                    <th>TT4 Measured</th>
+                    <th>T4U Measured</th>
+                    <th>TBG Measured</th>
+                    <th>TSH</th>
+                    <th>T3</th>
+                    <th>TT4</th>
+                    <th>T4U</th>
+                    <th>FTI</th>
+                    <th>TBG</th>
+                    <th>Result</th>
+                    <th>Download</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if predictions %}
+                {% for prediction in predictions %}
+                    <tr>
+                        <td>{{ prediction.id }}</td>
+                        <td>{{ prediction.age }}</td>
+                        <td>{{ prediction.sex }}</td>
+                        <td>{{ prediction.on_thyroxine }}</td>
+                        <td>{{ prediction.on_antithyroid_meds }}</td>
+                        <td>{{ prediction.sick }}</td>
+                        <td>{{ prediction.pregnant }}</td>
+                        <td data-label="Thyroid Surgery">{{ prediction.thyroid_surgery }}</td>
+                        <td data-label="I131 Treatment">{{ prediction.I131_treatment }}</td>
+                        <td data-label="Query Hypothyroid">{{ prediction.query_hypothyroid }}</td>
+                        <td data-label="Query Hyperthyroid">{{ prediction.query_hyperthyroid }}</td>
+                        <td data-label="Lithium">{{ prediction.lithium }}</td>
+                        <td data-label="Goitre">{{ prediction.goitre }}</td>
+                        <td data-label="Tumor">{{ prediction.tumor }}</td>
+                        <td data-label="Hypopituitary">{{ prediction.hypopituitary }}</td>
+                        <td data-label="Psych">{{ prediction.psych }}</td>
+                        <td data-label="FTI Measured">{{ prediction.FTI_measured }}</td>
+                        <td data-label="TSH Measured">{{ prediction.TSH_measured }}</td>
+                        <td data-label="T3 Measured">{{ prediction.T3_measured }}</td>
+                        <td data-label="TT4 Measured">{{ prediction.TT4_measured }}</td>
+                        <td data-label="T4U Measured">{{ prediction.T4U_measured }}</td>
+                        <td data-label="TBG Measured">{{ prediction.TBG_measured }}</td>
+                        <td data-label="TSH">{{ prediction.TSH }}</td>
+                        <td data-label="T3">{{ prediction.T3 }}</td>
+                        <td data-label="TT4">{{ prediction.TT4 }}</td>
+                        <td data-label="T4U">{{ prediction.T4U }}</td>
+                        <td data-label="FTI">{{ prediction.FTI }}</td>
+                        <td data-label="TBG">{{ prediction.TBG }}</td>
+                        <td data-label="Result">{{ prediction.result }}</td>
+                        <td>
+                            <form method="GET" action="{% url 'download_prediction' prediction.id %}">
+        <button type="submit" class="delete-button">Download</button>
+    </form>
+                        </td>
+                        <td><form method="POST" action="{% url 'delete_prediction' prediction.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="delete-button">Delete</button>
+                        </form>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                {% else %}
+                <tr class="empty-row">
+                    <td colspan="11">No predictions made yet.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

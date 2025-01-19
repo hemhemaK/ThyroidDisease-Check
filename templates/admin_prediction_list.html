@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction List</title>
+    <style>
+         .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        th, td {
+            padding: 6px 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            white-space: nowrap;
+        }
+        th {
+            background-color: #000033;
+            color: white;
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        tr:nth-child(even) td {
+            background-color: #f1f1f1;
+        }
+        tr:hover td {
+            background-color: #d1ecf1;
+            color: #333;
+        }
+        .empty-row {
+            text-align: center;
+            color: #888;
+            font-size: 1em;
+            font-style: italic;
+        }
+        .table-wrapper {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        @media (max-width: 768px) {
+            th, td {
+                font-size: 0.75em;
+            }
+        }
+
+        .down-button {
+            padding: 5px 10px;
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .down-button:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Thyroid Prediction</h1>
+    {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    <div class="table-wrapper">
+     <table>
+        <thead>
+            <tr>
+                <th>ID</th> <!-- New ID Column -->
+                <th>User</th>
+                <th>Age</th>
+                <th>Sex</th>
+                <th>TSH</th>
+                <th>T3</th>
+                <th>TT4</th>
+                <th>T4U</th>
+                <th>FTI</th>
+                <th>TBG</th>
+                <th>Result</th>
+                <th>Created At</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if predictions %}
+            {% for prediction in predictions %}
+                <tr>
+                    <td>{{ prediction.id }}</td> <!-- Displaying ID -->
+                    <td>{{ prediction.user.username }}</td> <!-- Updated username access -->
+                    <td>{{ prediction.age }}</td>
+                    <td>{{ prediction.sex }}</td>
+                    <td>{{ prediction.TSH }}</td>
+                    <td>{{ prediction.T3 }}</td>
+                    <td>{{ prediction.TT4 }}</td>
+                    <td>{{ prediction.T4U }}</td>
+                    <td>{{ prediction.FTI }}</td>
+                    <td>{{ prediction.TBG }}</td>
+                    <td>{{ prediction.result }}</td>
+                    <td>{{ prediction.created_at }}</td>
+                    <td><form method="GET" action="{% url 'admin_download_prediction' prediction.id %}">
+                        <button type="submit" class="down-button">Download</button>
+                    </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% else %}
+            <tr class="empty-row">
+                <td colspan="12">No predictions made yet.</td>
+            {% endif %}
+        </tbody>
+     </table>
+</div>
+</div>
+</body>
+</html>

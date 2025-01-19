@@ -1,0 +1,390 @@
+{%load static%}
+<html lang="en">
+
+<head>
+    <meta charset="UTF=8">
+    <title> Prediction page</title>
+    <style>
+       body {
+    background-color: black;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+}
+
+.main {
+    width: 55%;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+}
+
+h2 {
+    color: #F6465B;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 10px;
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+legend {
+    font-weight: bold;
+    color: #00001a;
+}
+
+label {
+    margin-left: 5px;
+}
+
+input[type="number"],
+input[type="radio"] {
+    margin-bottom: 10px;
+}
+
+input[type="submit"],
+button {
+    background-color: #000033;
+    border: none;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background-color: #FF8C00;
+    transform: scale(1.05);
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-predict {
+    display: inline-block;
+    background-color: #000033;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+    float:left;
+
+}
+.btn-home{
+    display: inline-block;
+    background-color: #000033;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+    float:left;
+
+}
+
+.btn-home:hover,
+.btn-predict:hover {
+    background-color: #FF8C00;
+    transform: scale(1.05);
+}
+.video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+  <video autoplay muted loop class="video-background">
+        <source src="{% static 'images/video9.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div align='center' class="main">
+         <div class="button-container">
+                <a href="{% url 'home1' %}" class="btn-home">Home</a>
+            </div>
+        <h2>It's just a prediction - Do consult with a Doctor</h2> <br />
+        <form method="post" action="{% url 'predict' %}">
+        {% csrf_token %}
+        <!-- Integer fields as radio buttons -->
+            <fieldset> <legend>Age</legend>
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" step="0.01" required>
+        </fieldset>
+        <fieldset>
+            <legend>Sex</legend>
+            <input type="radio" id="sex_female" name="sex" value="0" required>
+            <label for="sex_female">Female</label>
+            <input type="radio" id="sex_male" name="sex" value="1" required>
+            <label for="sex_male">Male</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>On Thyroxine</legend>
+            <input type="radio" id="on_thyroxine_no" name="on_thyroxine" value="0" required>
+            <label for="on_thyroxine_no">No</label>
+            <input type="radio" id="on_thyroxine_yes" name="on_thyroxine" value="1" required>
+            <label for="on_thyroxine_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Query On Thyroxine</legend>
+            <input type="radio" id="query_on_thyroxine_no" name="query_on_thyroxine" value="0" required>
+            <label for="query_on_thyroxine_no">No</label>
+            <input type="radio" id="query_on_thyroxine_yes" name="query_on_thyroxine" value="1" required>
+            <label for="query_on_thyroxine_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>On Antithyroid Meds</legend>
+            <input type="radio" id="on_antithyroid_meds_no" name="on_antithyroid_meds" value="0" required>
+            <label for="on_antithyroid_meds_no">No</label>
+            <input type="radio" id="on_antithyroid_meds_yes" name="on_antithyroid_meds" value="1" required>
+            <label for="on_antithyroid_meds_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Sick</legend>
+            <input type="radio" id="sick_no" name="sick" value="0" required>
+            <label for="sick_no">No</label>
+            <input type="radio" id="sick_yes" name="sick" value="1" required>
+            <label for="sick_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Pregnant</legend>
+            <input type="radio" id="pregnant_no" name="pregnant" value="0" required>
+            <label for="pregnant_no">No</label>
+            <input type="radio" id="pregnant_yes" name="pregnant" value="1" required>
+            <label for="pregnant_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Thyroid Surgery</legend>
+            <input type="radio" id="thyroid_surgery_no" name="thyroid_surgery" value="0" required>
+            <label for="thyroid_surgery_no">No</label>
+            <input type="radio" id="thyroid_surgery_yes" name="thyroid_surgery" value="1" required>
+            <label for="thyroid_surgery_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>I131 Treatment</legend>
+            <input type="radio" id="I131_treatment_no" name="I131_treatment" value="0" required>
+            <label for="I131_treatment_no">No</label>
+            <input type="radio" id="I131_treatment_yes" name="I131_treatment" value="1" required>
+            <label for="I131_treatment_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Query Hypothyroid</legend>
+            <input type="radio" id="query_hypothyroid_no" name="query_hypothyroid" value="0" required>
+            <label for="query_hypothyroid_no">No</label>
+            <input type="radio" id="query_hypothyroid_yes" name="query_hypothyroid" value="1" required>
+            <label for="query_hypothyroid_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Query Hyperthyroid</legend>
+            <input type="radio" id="query_hyperthyroid_no" name="query_hyperthyroid" value="0" required>
+            <label for="query_hyperthyroid_no">No</label>
+            <input type="radio" id="query_hyperthyroid_yes" name="query_hyperthyroid" value="1" required>
+            <label for="query_hyperthyroid_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Lithium</legend>
+            <input type="radio" id="lithium_no" name="lithium" value="0" required>
+            <label for="lithium_no">No</label>
+            <input type="radio" id="lithium_yes" name="lithium" value="1" required>
+            <label for="lithium_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Goitre</legend>
+            <input type="radio" id="goitre_no" name="goitre" value="0" required>
+            <label for="goitre_no">No</label>
+            <input type="radio" id="goitre_yes" name="goitre" value="1" required>
+            <label for="goitre_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Tumor</legend>
+            <input type="radio" id="tumor_no" name="tumor" value="0" required>
+            <label for="tumor_no">No</label>
+            <input type="radio" id="tumor_yes" name="tumor" value="1" required>
+            <label for="tumor_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Hypopituitary</legend>
+            <input type="radio" id="hypopituitary_no" name="hypopituitary" value="0" required>
+            <label for="hypopituitary_no">No</label>
+            <input type="radio" id="hypopituitary_yes" name="hypopituitary" value="1" required>
+            <label for="hypopituitary_yes">Yes</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Psych</legend>
+            <input type="radio" id="psych_no" name="psych" value="0" required>
+            <label for="psych_no">No</label>
+            <input type="radio" id="psych_yes" name="psych" value="1" required>
+            <label for="psych_yes">Yes</label>
+        </fieldset>
+
+        <!-- Float fields as number inputs -->
+       <fieldset>
+        <legend>TSH_Measured</legend>
+        <input type="radio" id="TSH_measured_yes" name="TSH_measured" value="1" required>
+        <label for="TSH_measured_yes">Yes</label>
+        <input type="radio" id="TSH_measured_no" name="TSH_measured" value="0" required>
+        <label for="TSH_measured_no">No</label>
+    </fieldset>
+    <fieldset>
+        <legend>TSH</legend>
+        <label for="TSH">TSH:</label>
+        <input type="number" id="TSH" name="TSH" step="0.01" required>
+    </fieldset>
+
+    <!-- T3 Section -->
+    <fieldset>
+        <legend>T3_Measured</legend>
+        <input type="radio" id="T3_measured_yes" name="T3_measured" value="1" required>
+        <label for="T3_measured_yes">Yes</label>
+        <input type="radio" id="T3_measured_no" name="T3_measured" value="0" required>
+        <label for="T3_measured_no">No</label>
+    </fieldset>
+    <fieldset>
+        <legend>T3</legend>
+        <label for="T3">T3:</label>
+        <input type="number" id="T3" name="T3" step="0.01" required>
+    </fieldset>
+
+    <!-- TT4 Section -->
+    <fieldset>
+        <legend>TT4_Measured</legend>
+        <input type="radio" id="TT4_measured_yes" name="TT4_measured" value="1" required>
+        <label for="TT4_measured_yes">Yes</label>
+        <input type="radio" id="TT4_measured_no" name="TT4_measured" value="0" required>
+        <label for="TT4_measured_no">No</label>
+    </fieldset>
+    <fieldset>
+        <legend>TT4</legend>
+        <label for="TT4">TT4:</label>
+        <input type="number" id="TT4" name="TT4" step="0.01" required>
+    </fieldset>
+
+    <!-- T4U Section -->
+    <fieldset>
+        <legend>T4U_Measured</legend>
+        <input type="radio" id="T4U_measured_yes" name="T4U_measured" value="1" required>
+        <label for="T4U_measured_yes">Yes</label>
+        <input type="radio" id="T4U_measured_no" name="T4U_measured" value="0" required>
+        <label for="T4U_measured_no">No</label>
+    </fieldset>
+    <fieldset>
+        <legend>T4U</legend>
+        <label for="T4U">T4U:</label>
+        <input type="number" id="T4U" name="T4U" step="0.01" required>
+    </fieldset>
+
+    <!-- FTI Section -->
+    <fieldset>
+        <legend>FTI_Measured</legend>
+        <input type="radio" id="FTI_measured_yes" name="FTI_measured" value="1" required>
+        <label for="FTI_measured_yes">Yes</label>
+        <input type="radio" id="FTI_measured_no" name="FTI_measured" value="0" required>
+        <label for="FTI_measured_no">No</label>
+    </fieldset>
+    <fieldset>
+        <legend>FTI</legend>
+        <label for="FTI">FTI:</label>
+        <input type="number" id="FTI" name="FTI" step="0.01" required>
+    </fieldset>
+
+    <!-- TBG Section -->
+    <fieldset>
+        <legend>TBG_Measured</legend>
+        <input type="radio" id="TBG_measured_yes" name="TBG_measured" value="1" required>
+        <label for="TBG_measured_yes">Yes</label>
+        <input type="radio" id="TBG_measured_no" name="TBG_measured" value="0" required>
+        <label for="TBG_measured_no">No</label>
+    </fieldset>
+    <fieldset>
+        <legend>TBG</legend>
+        <label for="TBG">TBG:</label>
+        <input type="number" id="TBG" name="TBG" step="0.01" required>
+    </fieldset>
+
+    <script>
+        // Function to set the value of the related input to 0 when "No" is selected
+        function handleMeasurement(measureInput, relatedInput) {
+            const measureYes = document.getElementById(measureInput + '_yes');
+            const measureNo = document.getElementById(measureInput + '_no');
+            const relatedField = document.getElementById(relatedInput);
+
+            measureNo.addEventListener('change', function () {
+                if (this.checked) {
+                    relatedField.value = 0;
+                    relatedField.disabled = true;  // Disable the input when "No" is selected
+                }
+            });
+
+            measureYes.addEventListener('change', function () {
+                if (this.checked) {
+                    relatedField.disabled = false;  // Enable the input when "Yes" is selected
+                    relatedField.value = '';  // Clear the field when "Yes" is selected
+                }
+            });
+        }
+
+        // Call the function for each measured input and corresponding related input
+        handleMeasurement('TSH_measured', 'TSH');
+        handleMeasurement('T3_measured', 'T3');
+        handleMeasurement('TT4_measured', 'TT4');
+        handleMeasurement('T4U_measured', 'T4U');
+        handleMeasurement('FTI_measured', 'FTI');
+        handleMeasurement('TBG_measured', 'TBG');
+    </script>
+            <div class="button-container">
+                <button type="submit" class="btn-predict">Predict</button>
+            </div>
+        </form>
+        <div class="row">
+            <h2><em>{{result2}}</em></h2>
+        </div>
+        </div>
+</body>
+
+</html>

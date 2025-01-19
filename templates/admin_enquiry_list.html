@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enquiry List</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #000033;
+            color: white;
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f1f1f1;
+        }
+
+        tr:hover td {
+            background-color: #d1ecf1;
+            color: #333;
+        }
+
+        .reply-button {
+            padding: 5px 10px;
+            background-color: #5bc0de;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+
+        .reply-button:hover {
+            background-color: #31b0d5;
+        }
+
+        .replied-yes {
+            color: green;
+            font-weight: bold;
+        }
+
+        .replied-no {
+            color: red;
+            font-weight: bold;
+        }
+
+        .button-container {
+            text-align: left;
+            margin-top: 0px;
+            margin-bottom: 20px;
+        }
+
+        .btn-home {
+            display: inline-block;
+            background-color: #000033;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out, transform 0.2s;
+            margin-right: 10px;
+        }
+
+        .btn-home:hover {
+            background-color: #FF8C00;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="button-container">
+            <a href="{% url 'dashboard' %}" class="btn-home">Back</a>
+        </div>
+        <h1>Enquiry List</h1>
+         {% if messages %}
+            <div class="alert">
+                {% for message in messages %}
+                    <div class="alert-message">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Issue</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                        <th>Reply Message</th>
+                        <th>Replied</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for enquiry in enquiries %}
+                        <tr>
+                            <td>{{ enquiry.name }}</td>
+                            <td>{{ enquiry.email }}</td>
+                            <td>{{ enquiry.subject }}</td>
+                            <td>{{ enquiry.issue }}</td>
+                            <td>{{ enquiry.message }}</td>
+                            <td>{{ enquiry.created_at }}</td>
+                            <td>
+                                <form action="{% url 'reply_enquiry' enquiry.id %}" method="post">
+                                    {% csrf_token %}
+                                    <textarea name="reply_message" rows="3" cols="30" placeholder="Enter your reply here..."></textarea><br>
+                                    <button type="submit" class="reply-button">Send Reply</button>
+                                </form>
+                            </td>
+                            <td>
+                                {% if enquiry.reply_message and enquiry.reply_message != "" %}
+                                    {{ enquiry.reply_message }}
+                                {% else %}
+                                    <em>No reply yet</em>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if enquiry.reply_message and enquiry.reply_message != "" %}
+                                    <span class="replied-yes">Yes</span>
+                                {% else %}
+                                    <span class="replied-no">No</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

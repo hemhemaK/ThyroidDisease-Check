@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    {% load static %}
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            background-color: rgba(0, 0, 26, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+            animation: slideIn 1s ease-out;
+        }
+
+        .login-container h1 {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 10px;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .login-container label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+            color: #ffffff;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 3px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        .login-container input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .login-container button {
+            width: 110%;
+            padding: 12px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .login-container button:hover {
+            background-color: #ccccff;
+            transform: translateY(-2px);
+            color: #000033;
+        }
+
+        .login-container .home-button {
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-right:195px;
+        }
+
+        .login-container .home-button:hover {
+            transform: translateY(-2px);
+            color: #000033;
+        }
+
+        .message {
+            color: #ff0000;
+            background-color: rgba(255, 200, 200, 0.4);
+            padding: 1px;
+            border-radius: 5px;
+            border: 3px solid #ff4d4d;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            width: 100%;
+            animation: fadeIn 1.5s ease-in-out;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Video Background -->
+    <video autoplay muted loop class="video-background">
+        <source src="{% static 'images/video9.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="login-container">
+        <h1>Admin Login</h1>
+        {% if messages %}
+            <div class="message">
+                {% for message in messages %}
+                    <h3><b>{{ message }}</b></h3>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="post" action="{% url 'admin_login' %}">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit"><b>Login</b></button>
+        </form>
+        <a href="{% url 'home' %}" class="home-button"><button><b>Home</b></button></a>
+    </div>
+
+</body>
+</html>
